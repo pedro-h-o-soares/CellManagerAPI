@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CellManagerAPI.Domain.Core\CellManagerAPI.Domain.Core.csproj" />
+    <ProjectReference Include="..\CellManagerAPI.Domain\CellManagerAPI.Domain.csproj" />
+    <ProjectReference Include="..\CellManagerAPI.Infraestructure.Data\CellManagerAPI.Infraestructure.Data.csproj" />
+  </ItemGroup>
+
 </Project>

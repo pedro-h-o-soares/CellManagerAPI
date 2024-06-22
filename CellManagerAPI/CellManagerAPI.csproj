@@ -12,6 +12,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
       <PrivateAssets>all</PrivateAssets>
@@ -21,11 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CellManagerAPI.Application\CellManagerAPI.Application.csproj" />
+    <ProjectReference Include="..\CellManagerAPI.Domain.Services\CellManagerAPI.Domain.Services.csproj" />
+    <ProjectReference Include="..\CellManagerAPI.Infraestructure.CrossCutting.Adapter\CellManagerAPI.Infraestructure.CrossCutting.Adapter.csproj" />
     <ProjectReference Include="..\CellManagerAPI.Infraestructure.Data\CellManagerAPI.Infraestructure.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\CellManagerAPI.Infraestructure.Repository\CellManagerAPI.Infraestructure.Repository.csproj" />
   </ItemGroup>
 
 </Project>
