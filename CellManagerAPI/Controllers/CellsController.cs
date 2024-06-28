@@ -47,8 +47,7 @@ public class CellsController : ControllerBase
     /// <summary>
     /// You can create Cells here.
     /// </summary>
-    /// <param name="Number">Number of the Cell</param>
-    /// <param name="SupervisionId">Id of the Supervision the Cell will part of</param>
+    /// <param name="dto">Object of Cell to be created</param>
     /// <returns>This endpoint returns the created Cell</returns>
     [HttpPost]
     public IActionResult Create(CreateCellsDto dto)

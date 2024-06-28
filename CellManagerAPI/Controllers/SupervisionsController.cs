@@ -44,9 +44,9 @@ public class SupervisionsController : ControllerBase
     }
 
     /// <summary>
-    /// You can create Cells here.
+    /// You can create Supervisions here.
     /// </summary>
-    /// <param name="Color">Color of the Supervision</param>
+    /// <param name="dto">Object of Supervision to be created</param>
     /// <returns>This endpoint returns the created Supervision</returns>
     [HttpPost]
     public IActionResult Create(CreateSupervisionsDto dto)
