@@ -15,6 +15,12 @@ public class SupervisionsController : ControllerBase
         _service = service;
     }
 
+    /// <summary>
+    /// You can search for Supervisions here.
+    /// </summary>
+    /// <param name="skip">Number of Supervisions to skip</param>
+    /// <param name="take">Number of Supervisions to take</param>
+    /// <returns>This endpoint returns a list of Supervisions</returns>
     [HttpGet]
     public IActionResult Get(
         [FromQuery] int skip = 0,
@@ -23,6 +29,11 @@ public class SupervisionsController : ControllerBase
         return Ok(_service.GetAll(skip, take));
     }
 
+    /// <summary>
+    /// You can search for a specific Supervision here.
+    /// </summary>
+    /// <param name="id">The id of the Supervision you are looking for</param>
+    /// <returns>This endpoint returns the Supervision with the given id</returns>
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
@@ -32,6 +43,11 @@ public class SupervisionsController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// You can create Cells here.
+    /// </summary>
+    /// <param name="Color">Color of the Supervision</param>
+    /// <returns>This endpoint returns the created Supervision</returns>
     [HttpPost]
     public IActionResult Create(CreateSupervisionsDto dto)
     {
@@ -40,7 +56,7 @@ public class SupervisionsController : ControllerBase
             ArgumentNullException.ThrowIfNull(dto);
             var supervision = _service.Add(dto);
 
-            return CreatedAtAction(nameof(Get), new { supervision.Id }, supervision);
+            return CreatedAtAction(nameof(Get), new { id = supervision.Id }, supervision);
         }
         catch (Exception ex)
         {
