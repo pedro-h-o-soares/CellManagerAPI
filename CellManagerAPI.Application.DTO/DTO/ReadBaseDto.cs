@@ -2,4 +2,5 @@
 
 public class ReadBaseDto
 {
+    public int Id { get; set; }
 }

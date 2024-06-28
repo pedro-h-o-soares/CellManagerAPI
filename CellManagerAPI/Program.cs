@@ -7,6 +7,8 @@ using CellManagerAPI.Infraestructure.CrossCutting.Adapter;
 using CellManagerAPI.Infraestructure.Data;
 using CellManagerAPI.Infraestructure.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,12 +31,42 @@ builder.Services.AddTransient<IApplicationServiceCells, ApplicationServiceCells>
 builder.Services.AddTransient<IServiceCells, ServiceCells>();
 builder.Services.AddTransient<IRepositoryCells, RepositoryCells>();
 
+builder.Services.AddTransient<IApplicationServiceMembers, ApplicationServiceMembers>();
+builder.Services.AddTransient<IServiceMembers, ServiceMembers>();
+builder.Services.AddTransient<IRepositoryMembers, RepositoryMembers>();
+
+builder.Services.AddTransient<IApplicationServiceVisitors, ApplicationServiceVisitors>();
+builder.Services.AddTransient<IServiceVisitors, ServiceVisitors>();
+builder.Services.AddTransient<IRepositoryVisitors, RepositoryVisitors>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+var info = new OpenApiInfo()
+{
+    Title = "CellManagerAPI Documentation",
+    Version = "v1",
+    Description = "This project implements a API for managing groups of people and events from a organization",
+    Contact = new OpenApiContact()
+    {
+        Name = "Pedro Soares",
+        Email = "p.h.o.soares@hotmail.com",
+    }
+
+};
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", info);
+
+    // Set the comments path for the Swagger JSON and UI.
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
 
 var app = builder.Build();
 

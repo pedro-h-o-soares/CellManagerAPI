@@ -16,6 +16,12 @@ public class CellsController : ControllerBase
         _service = service;
     }
 
+    /// <summary>
+    /// You can search for Cells here.
+    /// </summary>
+    /// <param name="skip">Number of cells to skip</param>
+    /// <param name="take">Number of cells to take</param>
+    /// <returns>This endpoint returns a list of Cells</returns>
     [HttpGet]
     public IActionResult Get(
         [FromQuery] int skip = 0,
@@ -24,8 +30,13 @@ public class CellsController : ControllerBase
         return Ok(_service.GetAll(skip, take));
     }
 
+    /// <summary>
+    /// You can search for a specific Cell here.
+    /// </summary>
+    /// <param name="id">The id of the Cell you are looking for</param>
+    /// <returns>This endpoint returns the Cell with the given id</returns>
     [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public IActionResult GetById(int id)
     {
         var result = _service.GetById(id);
         if (result is null) return NotFound();
@@ -33,6 +44,12 @@ public class CellsController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// You can create Cells here.
+    /// </summary>
+    /// <param name="Number">Number of the Cell</param>
+    /// <param name="SupervisionId">Id of the Supervision the Cell will part of</param>
+    /// <returns>This endpoint returns the created Cell</returns>
     [HttpPost]
     public IActionResult Create(CreateCellsDto dto)
     {
@@ -41,7 +58,7 @@ public class CellsController : ControllerBase
             ArgumentNullException.ThrowIfNull(dto);
             var cell = _service.Add(dto);
 
-            return CreatedAtAction(nameof(Get), new { cell.Id }, cell);
+            return CreatedAtAction(nameof(Get), new { id = cell.Id }, cell);
         }
         catch (Exception ex)
         {
