@@ -63,4 +63,28 @@ public class MembersController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    /// <summary>
+    /// You can update Members here.
+    /// </summary>
+    /// <param name="id">Id of Member to be updated</param>
+    /// <param name="dto">Object of Member to be updated</param>
+    /// <returns>This endpoint returns the updated Member</returns>
+    [HttpPut("{id}")]
+    public IActionResult Update(
+        int id,
+        [FromBody] CreateMembersDto dto)
+    {
+        try
+        {
+            ArgumentNullException.ThrowIfNull(dto);
+            _service.Update(id, dto);
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

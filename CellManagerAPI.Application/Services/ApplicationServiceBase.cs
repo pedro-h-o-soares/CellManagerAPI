@@ -42,7 +42,7 @@ public class ApplicationServiceBase<TEntity, TCreateDto, TReadDto> : IApplicatio
 
     public virtual void Update(int id, TCreateDto dto)
     {
-        var obj = _service.GetById(id) ?? throw new Exception($"No element found with id [{id}] found");
+        var obj = _service.GetById(id) ?? throw new Exception($"No element with id [{id}] found");
 
         _mapper.Map(dto, obj);
         _service.Update(obj);
@@ -50,7 +50,7 @@ public class ApplicationServiceBase<TEntity, TCreateDto, TReadDto> : IApplicatio
 
     public virtual void Remove(int id)
     {
-        var obj = _service.GetById(id) ?? throw new Exception($"No element found with id [{id}] found"); ;
+        var obj = _service.GetById(id) ?? throw new Exception($"No element with id [{id}] found"); ;
         _service.Remove(obj);
     }
 

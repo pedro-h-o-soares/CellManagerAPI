@@ -64,4 +64,28 @@ public class CellsController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    /// <summary>
+    /// You can update Cells here.
+    /// </summary>
+    /// <param name="id">Id of Cell to be updated</param>
+    /// <param name="dto">Object of Cell to be updated</param>
+    /// <returns>This endpoint returns the updated Cell</returns>
+    [HttpPut("{id}")]
+    public IActionResult Update(
+        int id,
+        [FromBody] CreateCellsDto dto)
+    {
+        try
+        {
+            ArgumentNullException.ThrowIfNull(dto);
+            _service.Update(id, dto);
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

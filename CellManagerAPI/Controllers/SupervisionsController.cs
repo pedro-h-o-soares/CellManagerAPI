@@ -63,4 +63,28 @@ public class SupervisionsController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    /// <summary>
+    /// You can update Supervisions here.
+    /// </summary>
+    /// <param name="id">Id of Supervision to be updated</param>
+    /// <param name="dto">Object of Supervision to be updated</param>
+    /// <returns>This endpoint returns the updated Supervision</returns>
+    [HttpPut("{id}")]
+    public IActionResult Update(
+        int id, 
+        [FromBody] CreateSupervisionsDto dto)
+    {
+        try
+        {
+            ArgumentNullException.ThrowIfNull(dto);
+            _service.Update(id, dto);
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }
