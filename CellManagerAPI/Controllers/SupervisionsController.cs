@@ -1,5 +1,6 @@
 ﻿using CellManagerAPI.Application.DTO.DTO;
 using CellManagerAPI.Application.Interfaces;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CellManagerAPI.Controllers;
@@ -79,6 +80,30 @@ public class SupervisionsController : ControllerBase
         {
             ArgumentNullException.ThrowIfNull(dto);
             _service.Update(id, dto);
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// You can partially update Supervisions here
+    /// </summary>
+    /// <param name="id">Id of Supervision to be updated</param>
+    /// <param name="patch">JsonPatch object of Supervision to be updated</param>
+    /// <returns>This endpoint returns no content</returns>
+    [HttpPatch("{id}")]
+    public IActionResult Patch(
+        int id,
+        [FromBody] JsonPatchDocument<CreateSupervisionsDto> patch)
+    {
+        try
+        {
+            ArgumentNullException.ThrowIfNull(patch);
+            _service.Patch(id, patch);
 
             return NoContent();
         }
