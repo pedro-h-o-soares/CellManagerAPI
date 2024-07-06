@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CellManagerAPI.Application.Interfaces;
 using CellManagerAPI.Application.DTO.DTO;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace VisitorManagerAPI.Controllers;
 
@@ -78,6 +79,30 @@ public class VisitorsController : ControllerBase
         {
             ArgumentNullException.ThrowIfNull(dto);
             _service.Update(id, dto);
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// You can partially update Visitors here
+    /// </summary>
+    /// <param name="id">Id of Visitor to be updated</param>
+    /// <param name="patch">JsonPatch object of Visitor to be updated</param>
+    /// <returns>This endpoint returns no content</returns>
+    [HttpPatch("{id}")]
+    public IActionResult Patch(
+        int id,
+        [FromBody] JsonPatchDocument<CreateVisitorsDto> patch)
+    {
+        try
+        {
+            ArgumentNullException.ThrowIfNull(patch);
+            _service.Patch(id, patch);
 
             return NoContent();
         }
