@@ -1,6 +1,7 @@
 ﻿using CellManagerAPI.Application.DTO.DTO;
 using CellManagerAPI.Application.Interfaces;
 using CellManagerAPI.Application.Services;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CellManagerAPI.Controllers;
@@ -69,7 +70,7 @@ public class MembersController : ControllerBase
     /// </summary>
     /// <param name="id">Id of Member to be updated</param>
     /// <param name="dto">Object of Member to be updated</param>
-    /// <returns>This endpoint returns the updated Member</returns>
+    /// <returns>This endpoint returns no content</returns>
     [HttpPut("{id}")]
     public IActionResult Update(
         int id,
@@ -79,6 +80,30 @@ public class MembersController : ControllerBase
         {
             ArgumentNullException.ThrowIfNull(dto);
             _service.Update(id, dto);
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// You can partially update Members here
+    /// </summary>
+    /// <param name="id">Id of Member to be updated</param>
+    /// <param name="patch">JsonPatch object of Member to be updated</param>
+    /// <returns>This endpoint returns no content</returns>
+    [HttpPatch("{id}")]
+    public IActionResult Patch(
+        int id,
+        [FromBody] JsonPatchDocument<CreateMembersDto> patch)
+    {
+        try
+        {
+            ArgumentNullException.ThrowIfNull(patch);
+            _service.Patch(id, patch);
 
             return NoContent();
         }

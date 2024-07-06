@@ -6,7 +6,7 @@ namespace CellManagerAPI.Domain.Services.Services;
 
 public class ServiceBase<TEntity> : IDisposable, IServiceBase<TEntity> where TEntity : Base
 {
-    protected readonly IRepositoryBase<TEntity> _repository;
+    private readonly IRepositoryBase<TEntity> _repository;
 
     public ServiceBase(IRepositoryBase<TEntity> repository)
     {

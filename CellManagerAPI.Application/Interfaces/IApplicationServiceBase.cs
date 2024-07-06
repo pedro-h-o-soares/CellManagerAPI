@@ -1,5 +1,6 @@
 ﻿using CellManagerAPI.Application.DTO.DTO;
 using CellManagerAPI.Domain.Models;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace CellManagerAPI.Application.Interfaces;
 
@@ -15,6 +16,8 @@ public interface IApplicationServiceBase<TEntity, TCreateDto, TReadDto> : IDispo
     TEntity Add(TCreateDto dto);
 
     void Update(int id, TCreateDto dto);
+
+    void Patch(int id, JsonPatchDocument<TCreateDto> dto);
 
     void Remove(int id);
 

@@ -3,6 +3,7 @@ using CellManagerAPI.Application.DTO.DTO;
 using CellManagerAPI.Application.Interfaces;
 using CellManagerAPI.Domain.Core.Interfaces.Services;
 using CellManagerAPI.Domain.Models;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace CellManagerAPI.Application.Services;
 
@@ -42,15 +43,24 @@ public class ApplicationServiceBase<TEntity, TCreateDto, TReadDto> : IApplicatio
 
     public virtual void Update(int id, TCreateDto dto)
     {
-        var obj = _service.GetById(id) ?? throw new Exception($"No element with id [{id}] found");
+        var obj = _service.GetById(id) ?? throw new KeyNotFoundException($"No element with id [{id}] found");
 
         _mapper.Map(dto, obj);
         _service.Update(obj);
     }
 
+    public virtual void Patch(int id, JsonPatchDocument<TCreateDto> patch)
+    {
+        var obj = _service.GetById(id) ?? throw new KeyNotFoundException($"No element with id [{id}] found");
+        var entityPatch = _mapper.Map<JsonPatchDocument<TEntity>>(patch);
+
+        entityPatch.ApplyTo(obj);
+        _service.Update(obj);
+    }
+
     public virtual void Remove(int id)
     {
-        var obj = _service.GetById(id) ?? throw new Exception($"No element with id [{id}] found"); ;
+        var obj = _service.GetById(id) ?? throw new KeyNotFoundException($"No element with id [{id}] found"); ;
         _service.Remove(obj);
     }
 
