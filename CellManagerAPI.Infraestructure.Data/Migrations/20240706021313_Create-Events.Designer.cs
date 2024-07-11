@@ -4,6 +4,7 @@ using CellManagerAPI.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CellManagerAPI.Infraestructure.Data.Migrations
 {
     [DbContext(typeof(CellManagerContext))]
-    partial class CellManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20240706021313_Create-Events")]
+    partial class CreateEvents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,10 +82,10 @@ namespace CellManagerAPI.Infraestructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly?>("BirthDate")
+                    b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("CellId")
+                    b.Property<int?>("CellId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -124,7 +127,7 @@ namespace CellManagerAPI.Infraestructure.Data.Migrations
                     b.Property<DateOnly?>("BirthDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("CellId")
+                    b.Property<int?>("CellId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -192,9 +195,7 @@ namespace CellManagerAPI.Infraestructure.Data.Migrations
                 {
                     b.HasOne("CellManagerAPI.Domain.Models.Cell", "Cell")
                         .WithMany("Members")
-                        .HasForeignKey("CellId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CellId");
 
                     b.Navigation("Cell");
                 });
@@ -203,9 +204,7 @@ namespace CellManagerAPI.Infraestructure.Data.Migrations
                 {
                     b.HasOne("CellManagerAPI.Domain.Models.Cell", "Cell")
                         .WithMany("Visitors")
-                        .HasForeignKey("CellId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CellId");
 
                     b.Navigation("Cell");
                 });
