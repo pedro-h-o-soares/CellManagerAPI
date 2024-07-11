@@ -39,6 +39,10 @@ builder.Services.AddTransient<IApplicationServiceVisitors, ApplicationServiceVis
 builder.Services.AddTransient<IServiceVisitors, ServiceVisitors>();
 builder.Services.AddTransient<IRepositoryVisitors, RepositoryVisitors>();
 
+builder.Services.AddTransient<IApplicationServiceEvents, ApplicationServiceEvents>();
+builder.Services.AddTransient<IServiceEvents, ServiceEvents>();
+builder.Services.AddTransient<IRepositoryEvents, RepositoryEvents>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers()
