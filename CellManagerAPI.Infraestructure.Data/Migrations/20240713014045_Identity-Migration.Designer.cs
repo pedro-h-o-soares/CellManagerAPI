@@ -4,6 +4,7 @@ using CellManagerAPI.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CellManagerAPI.Infraestructure.Data.Migrations
 {
     [DbContext(typeof(CellManagerContext))]
-    partial class CellManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20240713014045_Identity-Migration")]
+    partial class IdentityMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -193,26 +196,6 @@ namespace CellManagerAPI.Infraestructure.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "d17e5a08-672d-490c-8c83-05c28e1c053d",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "266ba278-0e3a-4e0f-84a0-25df32f42d34",
-                            Name = "Supervisor",
-                            NormalizedName = "SUPERVISOR"
-                        },
-                        new
-                        {
-                            Id = "49443600-f652-4665-af6e-5c9c0405f696",
-                            Name = "Leader",
-                            NormalizedName = "LEADER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -303,22 +286,6 @@ namespace CellManagerAPI.Infraestructure.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "582df6a9-d3a2-43ea-90c5-207ec806fab2",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "d3a847bb-fc04-4cdb-826f-314c80bff208",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAjzE429JtW70RTKA0vECjZ4D8oNzMZgKCemXzbf0u8qNsghBQHzp9yr5ZnaDPBF1Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "fc72ef7f-3252-498c-8785-48bfb878237d",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -381,13 +348,6 @@ namespace CellManagerAPI.Infraestructure.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "582df6a9-d3a2-43ea-90c5-207ec806fab2",
-                            RoleId = "d17e5a08-672d-490c-8c83-05c28e1c053d"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
