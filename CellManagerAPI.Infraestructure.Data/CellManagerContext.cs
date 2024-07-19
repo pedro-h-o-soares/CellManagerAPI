@@ -10,6 +10,7 @@ public class CellManagerContext : DbContext
     public DbSet<Supervision> Supervisions { get; set; }
     public DbSet<Member> Members { get; set; }
     public DbSet<Visitor> Visitors { get; set; }
+    public DbSet<Event> Events { get; set; }
 
     public CellManagerContext(DbContextOptions<CellManagerContext> options) : base(options)
     {
@@ -18,5 +19,6 @@ public class CellManagerContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfiguration(new CellsConfiguration());
+        builder.ApplyConfiguration(new EventsConfiguration());
     }
 }

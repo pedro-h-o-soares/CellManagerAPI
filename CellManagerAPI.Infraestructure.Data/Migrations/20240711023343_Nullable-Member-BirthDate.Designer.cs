@@ -4,6 +4,7 @@ using CellManagerAPI.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CellManagerAPI.Infraestructure.Data.Migrations
 {
     [DbContext(typeof(CellManagerContext))]
-    partial class CellManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20240711023343_Nullable-Member-BirthDate")]
+    partial class NullableMemberBirthDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
