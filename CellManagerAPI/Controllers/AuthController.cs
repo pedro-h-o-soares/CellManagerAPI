@@ -21,7 +21,7 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="userInfo">User credentials for login</param>
     /// <returns>Object with JWT token and user data</returns>
-    [HttpPost]
+    [HttpPost("login")]
     public async Task<IActionResult> Login(UserInfoDto userInfo)
     {
         try
@@ -38,5 +38,22 @@ public class AuthController : ControllerBase
         {
             return BadRequest(ex);
         }
+    }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(CreateUserDto user)
+    {
+        try
+        {
+            ArgumentNullException.ThrowIfNull(user);
+            
+            await _service.Register(user);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
+        }
+
+        return Ok();
     }
 }

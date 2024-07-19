@@ -1,4 +1,5 @@
-﻿using CellManagerAPI.Application.DTO.DTO.Auth;
+﻿using AutoMapper;
+using CellManagerAPI.Application.DTO.DTO.Auth;
 using CellManagerAPI.Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -14,15 +15,18 @@ public class ApplicationServiceAuth : IApplicationServiceAuth
     private readonly UserManager<IdentityUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
+    private readonly IMapper _mapper;
 
     public ApplicationServiceAuth(
         UserManager<IdentityUser> userManager,
         RoleManager<IdentityRole> roleManager,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IMapper mapper)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
+        _mapper = mapper;
     }
 
     public async Task<TokenDto> Login(UserInfoDto userInfo)
@@ -55,6 +59,19 @@ public class ApplicationServiceAuth : IApplicationServiceAuth
             Token = new JwtSecurityTokenHandler().WriteToken(token),
             Username = user.UserName,
         };
+    }
+
+    public async Task Register(CreateUserDto dto)
+    {
+        var user = _mapper.Map<IdentityUser>(dto);
+        user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, dto.Password);
+
+        var result = await _userManager.CreateAsync(user);
+
+        if (!result.Succeeded)
+        {
+            throw new UnauthorizedAccessException(result.Errors.First().Description);
+        }
     }
 
     private bool CanLogin(IdentityUser? user, string password)

@@ -7,4 +7,5 @@ namespace CellManagerAPI.Application.Interfaces;
 public interface IApplicationServiceAuth
 {
     Task<TokenDto> Login(UserInfoDto userInfo);
+    Task Register(CreateUserDto dto);
 }
