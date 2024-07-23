@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CellManagerAPI.Application.DTO.DTO;
 using CellManagerAPI.Application.DTO.DTO.Auth;
 using CellManagerAPI.Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -61,7 +62,7 @@ public class ApplicationServiceAuth : IApplicationServiceAuth
         };
     }
 
-    public async Task Register(CreateUserDto dto)
+    public async Task Register(CreateUsersDto dto)
     {
         var user = _mapper.Map<IdentityUser>(dto);
         user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, dto.Password);

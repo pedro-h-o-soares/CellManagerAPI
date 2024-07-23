@@ -1,6 +1,6 @@
-﻿using CellManagerAPI.Application.DTO.DTO.Auth;
+﻿using CellManagerAPI.Application.DTO.DTO;
+using CellManagerAPI.Application.DTO.DTO.Auth;
 using CellManagerAPI.Application.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CellManagerAPI.Controllers;
@@ -41,7 +41,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(CreateUserDto user)
+    public async Task<IActionResult> Register(CreateUsersDto user)
     {
         try
         {

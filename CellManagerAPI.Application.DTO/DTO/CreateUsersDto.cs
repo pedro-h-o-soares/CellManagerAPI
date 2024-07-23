@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CellManagerAPI.Application.DTO.DTO.Auth;
+namespace CellManagerAPI.Application.DTO.DTO;
 
-public class CreateUserDto
+public class CreateUsersDto : CreateBaseDto
 {
     [Required]
     public string UserName { get; set; }
