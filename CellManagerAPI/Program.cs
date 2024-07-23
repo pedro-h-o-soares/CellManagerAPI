@@ -6,6 +6,7 @@ using CellManagerAPI.Domain.Services.Services;
 using CellManagerAPI.Infraestructure.CrossCutting.Adapter;
 using CellManagerAPI.Infraestructure.Data;
 using CellManagerAPI.Infraestructure.Repository.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -19,7 +20,12 @@ var cellDbStrConn = builder.Configuration.GetConnectionString("CellDbConnection"
 builder.Services
     .AddDbContext<CellManagerContext>(opts =>
         opts.UseLazyLoadingProxies()
-            .UseSqlServer(cellDbStrConn));
+            .UseSqlServer(cellDbStrConn)
+            .EnableSensitiveDataLogging());
+
+builder.Services
+    .AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<CellManagerContext>();
 
 Require.RequireAssembly();
 
@@ -42,6 +48,8 @@ builder.Services.AddTransient<IRepositoryVisitors, RepositoryVisitors>();
 builder.Services.AddTransient<IApplicationServiceEvents, ApplicationServiceEvents>();
 builder.Services.AddTransient<IServiceEvents, ServiceEvents>();
 builder.Services.AddTransient<IRepositoryEvents, RepositoryEvents>();
+
+builder.Services.AddTransient<IApplicationServiceAuth, ApplicationServiceAuth>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
