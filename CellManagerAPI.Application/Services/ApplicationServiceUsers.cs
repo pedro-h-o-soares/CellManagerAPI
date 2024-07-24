@@ -37,20 +37,16 @@ public class ApplicationServiceUsers : IApplicationServiceUsers
 
     public async Task Update(string id, UpdateUsersDto dto)
     {
-        var obj = _userManager.Users.FirstOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException($"No element with id [{id}] found");
+        var user = _userManager.Users.FirstOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException($"No element with id [{id}] found");
 
-        _mapper.Map(dto, obj);
-
-        await _userManager.UpdateAsync(obj);
-    }
-
-    public async Task Patch(string id, JsonPatchDocument<UpdateUsersDto> patch)
-    {
-        var obj = _userManager.Users.FirstOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException($"No element with id [{id}] found");
-        var entityPatch = _mapper.Map<JsonPatchDocument<IdentityUser>>(patch);
-
-        entityPatch.ApplyTo(obj);
-        await _userManager.UpdateAsync(obj);
+        _mapper.Map(dto, user);
+        
+        var userRoles = await _userManager.GetRolesAsync(user);
+        
+        await _userManager.AddToRolesAsync(user, dto.Roles);
+        await _userManager.RemoveFromRolesAsync(user, userRoles.Where(r => !dto.Roles.Contains(r)));
+        
+        await _userManager.UpdateAsync(user);
     }
 
     public async Task Remove(string id)

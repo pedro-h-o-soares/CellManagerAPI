@@ -68,28 +68,4 @@ public class UsersController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
-    /// <summary>
-    /// You can partially update Users here
-    /// </summary>
-    /// <param name="id">Id of User to be updated</param>
-    /// <param name="patch">JsonPatch object of User to be updated</param>
-    /// <returns>This endpoint returns no content</returns>
-    [HttpPatch("{id}")]
-    public async Task<IActionResult> Patch(
-        string id,
-        [FromBody] JsonPatchDocument<UpdateUsersDto> patch)
-    {
-        try
-        {
-            ArgumentNullException.ThrowIfNull(patch);
-            await _service.Patch(id, patch);
-
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
 }

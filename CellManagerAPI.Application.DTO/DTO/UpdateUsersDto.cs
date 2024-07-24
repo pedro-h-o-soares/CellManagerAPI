@@ -9,4 +9,5 @@ public class UpdateUsersDto
     [Required]
     [EmailAddress]
     public string Email { get; set; }
+    public IEnumerable<string> Roles { get; set; }
 }
