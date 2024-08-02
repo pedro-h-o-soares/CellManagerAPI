@@ -1,3 +1,5 @@
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
 using CellManagerAPI.Application.Interfaces;
 using CellManagerAPI.Application.Services;
 using CellManagerAPI.Domain.Core.Interfaces.Repositories;
@@ -10,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using CellManagerAPI.Infraestructure.CrossCutting.Adapter.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,33 +30,37 @@ builder.Services
     .AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<CellManagerContext>();
 
-Require.RequireAssembly();
+builder.Host
+    .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>((container) =>
+    {
+        container.RegisterType<ApplicationServiceSupervisions>().As<IApplicationServiceSupervisions>().InstancePerLifetimeScope();
+        container.RegisterType<ServiceSupervisions>().As<IServiceSupervisions>().InstancePerLifetimeScope();
+        container.RegisterType<RepositorySupervisions>().As<IRepositorySupervisions>().InstancePerLifetimeScope();
 
-builder.Services.AddTransient<IApplicationServiceSupervisions, ApplicationServiceSupervisions>();
-builder.Services.AddTransient<IServiceSupervisions, ServiceSupervisions>();
-builder.Services.AddTransient<IRepositorySupervisions, RepositorySupervisions>();
+        container.RegisterType<ApplicationServiceCells>().As<IApplicationServiceCells>().InstancePerLifetimeScope();
+        container.RegisterType<ServiceCells>().As<IServiceCells>().InstancePerLifetimeScope();
+        container.RegisterType<RepositoryCells>().As<IRepositoryCells>().InstancePerLifetimeScope();
 
-builder.Services.AddTransient<IApplicationServiceCells, ApplicationServiceCells>();
-builder.Services.AddTransient<IServiceCells, ServiceCells>();
-builder.Services.AddTransient<IRepositoryCells, RepositoryCells>();
+        container.RegisterType<ApplicationServiceMembers>().As<IApplicationServiceMembers>().InstancePerLifetimeScope();
+        container.RegisterType<ServiceMembers>().As<IServiceMembers>().InstancePerLifetimeScope();
+        container.RegisterType<RepositoryMembers>().As<IRepositoryMembers>().InstancePerLifetimeScope();
 
-builder.Services.AddTransient<IApplicationServiceMembers, ApplicationServiceMembers>();
-builder.Services.AddTransient<IServiceMembers, ServiceMembers>();
-builder.Services.AddTransient<IRepositoryMembers, RepositoryMembers>();
+        container.RegisterType<ApplicationServiceVisitors>().As<IApplicationServiceVisitors>().InstancePerLifetimeScope();
+        container.RegisterType<ServiceVisitors>().As<IServiceVisitors>().InstancePerLifetimeScope();
+        container.RegisterType<RepositoryVisitors>().As<IRepositoryVisitors>().InstancePerLifetimeScope();
 
-builder.Services.AddTransient<IApplicationServiceVisitors, ApplicationServiceVisitors>();
-builder.Services.AddTransient<IServiceVisitors, ServiceVisitors>();
-builder.Services.AddTransient<IRepositoryVisitors, RepositoryVisitors>();
+        container.RegisterType<ApplicationServiceEvents>().As<IApplicationServiceEvents>().InstancePerLifetimeScope();
+        container.RegisterType<ServiceEvents>().As<IServiceEvents>().InstancePerLifetimeScope();
+        container.RegisterType<RepositoryEvents>().As<IRepositoryEvents>().InstancePerLifetimeScope();
 
-builder.Services.AddTransient<IApplicationServiceEvents, ApplicationServiceEvents>();
-builder.Services.AddTransient<IServiceEvents, ServiceEvents>();
-builder.Services.AddTransient<IRepositoryEvents, RepositoryEvents>();
+        container.RegisterType<ApplicationServiceAuth>().As<IApplicationServiceAuth>().InstancePerLifetimeScope();
 
-builder.Services.AddTransient<IApplicationServiceAuth, ApplicationServiceAuth>();
+        container.RegisterType<ApplicationServiceUsers>().As<IApplicationServiceUsers>().InstancePerLifetimeScope();
+    });
 
-builder.Services.AddTransient<IApplicationServiceUsers, ApplicationServiceUsers>();
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+var assembly = typeof(ProfileCells).Assembly;
+builder.Services.AddAutoMapper(assembly);
 
 builder.Services.AddControllers()
     .AddNewtonsoftJson();

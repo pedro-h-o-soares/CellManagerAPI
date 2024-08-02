@@ -12,8 +12,6 @@ public interface IApplicationServiceUsers
 
     Task Update(string id, UpdateUsersDto dto);
 
-    Task Patch(string id, JsonPatchDocument<UpdateUsersDto> dto);
-
     Task Remove(string id);
 
     void Dispose();
