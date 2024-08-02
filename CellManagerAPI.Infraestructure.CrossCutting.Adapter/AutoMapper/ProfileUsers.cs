@@ -14,7 +14,5 @@ public class ProfileUsers : Profile
         CreateMap<CreateUsersDto, IdentityUser>();
         CreateMap<UpdateUsersDto, IdentityUser>();
         CreateMap<IdentityUser, ReadUsersDto>();
-        CreateMap<JsonPatchDocument<UpdateUsersDto>, JsonPatchDocument<IdentityUser>>();
-        CreateMap<Operation<UpdateUsersDto>, Operation<IdentityUser>>();
     }
 }

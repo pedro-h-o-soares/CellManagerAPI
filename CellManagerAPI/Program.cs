@@ -51,6 +51,8 @@ builder.Services.AddTransient<IRepositoryEvents, RepositoryEvents>();
 
 builder.Services.AddTransient<IApplicationServiceAuth, ApplicationServiceAuth>();
 
+builder.Services.AddTransient<IApplicationServiceUsers, ApplicationServiceUsers>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers()
