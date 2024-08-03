@@ -1,7 +1,5 @@
 ﻿using CellManagerAPI.Application.DTO.DTO;
 using CellManagerAPI.Application.DTO.DTO.Auth;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 
 namespace CellManagerAPI.Application.Interfaces;
 
