@@ -58,7 +58,7 @@ public class CellsController : ControllerBase
             ArgumentNullException.ThrowIfNull(dto);
             var cell = _service.Add(dto);
 
-            return CreatedAtAction(nameof(Get), new { id = cell.Id }, cell);
+            return CreatedAtAction(nameof(GetById), new { id = cell.Id }, cell);
         }
         catch (Exception ex)
         {

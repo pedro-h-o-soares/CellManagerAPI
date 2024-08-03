@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.JsonPatch;
 
 namespace CellManagerAPI.Application.Interfaces;
 
-public interface IApplicationServiceBase<TEntity, TCreateDto, TReadDto> : IDisposable
-    where TEntity  : Base
+public interface IApplicationServiceBase<TCreateDto, TReadDto> : IDisposable
     where TCreateDto : CreateBaseDto
     where TReadDto : ReadBaseDto
 {
@@ -13,7 +12,7 @@ public interface IApplicationServiceBase<TEntity, TCreateDto, TReadDto> : IDispo
     
     TReadDto GetById(int id);
 
-    TEntity Add(TCreateDto dto);
+    TReadDto Add(TCreateDto dto);
 
     void Update(int id, TCreateDto dto);
 

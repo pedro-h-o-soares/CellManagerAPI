@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.JsonPatch;
 
 namespace CellManagerAPI.Application.Services;
 
-public class ApplicationServiceBase<TEntity, TCreateDto, TReadDto> : IApplicationServiceBase<TEntity, TCreateDto, TReadDto>
+public class ApplicationServiceBase<TEntity, TCreateDto, TReadDto> : IApplicationServiceBase<TCreateDto, TReadDto>
     where TEntity : Base
     where TCreateDto : CreateBaseDto
     where TReadDto : ReadBaseDto
@@ -33,12 +33,12 @@ public class ApplicationServiceBase<TEntity, TCreateDto, TReadDto> : IApplicatio
         return _mapper.Map<TReadDto>(obj);
     }
 
-    public virtual TEntity Add(TCreateDto dto)
+    public virtual TReadDto Add(TCreateDto dto)
     {
         var obj = _mapper.Map<TEntity>(dto);
         var result = _service.Add(obj);
 
-        return result;
+        return _mapper.Map<TReadDto>(result);
     }
 
     public virtual void Update(int id, TCreateDto dto)

@@ -1,6 +1,4 @@
 ﻿using CellManagerAPI.Application.DTO.DTO;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.JsonPatch;
 
 namespace CellManagerAPI.Application.Interfaces;
 
