@@ -3,7 +3,7 @@ using CellManagerAPI.Application.Interfaces;
 using CellManagerAPI.Application.DTO.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 
-namespace VisitorManagerAPI.Controllers;
+namespace CellManagerAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -56,7 +56,7 @@ public class VisitorsController : ControllerBase
             ArgumentNullException.ThrowIfNull(dto);
             var visitor = _service.Add(dto);
 
-            return CreatedAtAction(nameof(Get), new { id = visitor.Id }, visitor);
+            return CreatedAtAction(nameof(GetById), new { id = visitor.Id }, visitor);
         }
         catch (Exception ex)
         {
